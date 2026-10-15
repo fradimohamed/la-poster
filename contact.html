@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - La Poster</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">La Poster</div>
+        <nav id="nav-menu">
+            <a href="index.html">Accueil</a>
+            <a href="produits.html">Produits</a>
+            <a href="produit-vedette.html">Coup de cœur</a>
+            <a href="a-propos.html">À propos</a>
+            <a href="contact.html" class="active">Contact</a>
+        </nav>
+        <button id="menu-toggle" aria-label="Menu">☰</button>
+    </header>
+
+    <section class="container">
+        <h2>Contactez-nous</h2>
+        <p>Une question, une commande personnalisée ou un projet de décoration pour votre café ? Écrivez-nous !</p>
+        
+        <div class="contact-grid">
+            <div class="contact-info">
+                <p><strong>Ville :</strong> Sousse, Tunisie</p>
+                <p><strong>Téléphone :</strong> +216 XX XXX XXX</p>
+                <p><strong>Email :</strong> contact@laposter.tn</p>
+                <p><strong>Instagram & Facebook :</strong> @laposter.sousse</p>
+            </div>
+            
+            <form id="contact-form" class="contact-form">
+                <label for="name">Votre nom :</label>
+                <input type="text" id="name" required>
+
+                <label for="email">Votre email :</label>
+                <input type="email" id="email" required>
+
+                <label for="message">Votre message :</label>
+                <textarea id="message" rows="4" required></textarea>
+
+                <button type="submit" class="btn">Envoyer le message</button>
+                <p id="form-msg" class="success-msg" style="display:none;">Merci ! Votre message a bien été simulé.</p>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 La Poster - Sousse, Tunisie. Tous droits réservés.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
