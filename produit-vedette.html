@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Poster - Produit Vedette</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo logo-mark" aria-label="La Poster — accueil"><img src="images/logo-la-poster.png" alt="La Poster"></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="produits.html">Produits</a></li>
+                <li><a href="produit-vedette.html">Coup de cœur</a></li>
+                <li><a href="a-propos.html">À propos</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a class="cart-nav-link" href="panier.html">Panier <span class="cart-count" data-cart-count>0</span></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1 class="page-title" style="text-align: center; margin-bottom: 2rem;">Notre <span class="title-pink">Coup de Cœur</span> du Mois</h1>
+        
+        <div class="texture-panel featured-panel" style="display: flex; flex-wrap: wrap; gap: 3rem; align-items: center; padding: 2rem; border-radius: 8px;">
+            <div style="flex: 1; min-width: 300px;">
+                <img src="images/poster-1.jpg.jpg" alt="Poster Vedette Collection Sousse" style="width: 100%; border-radius: 6px;">
+            </div>
+            <div style="flex: 1; min-width: 300px;">
+                <h2 style="color: var(--primary-color); margin-bottom: 1rem;">Collection Exclusive Sousse</h2>
+                <p style="margin-bottom: 1rem;">Un design unique inspiré par les couleurs et la lumière de notre belle ville côtière. Imprimé sur un papier d'art texturé résistant aux UV.</p>
+                <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem;">
+                    <li>Papier épais haut de gamme (250g)</li>
+                    <li>Formats disponibles : A4, 30x40 cm, 50x70 cm</li>
+                    <li>Emballage soigné et éco-responsable</li>
+                </ul>
+                <div class="price" style="font-size: 1.5rem; margin-bottom: 1.5rem;">20 TND</div>
+                <button class="btn add-to-cart" type="button" data-product-id="collection-sousse" data-name="Collection Exclusive Sousse" data-artist="LA POSTER" data-price="20" data-image="images/poster-1.jpg.jpg">Ajouter au panier</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 La Poster - Sousse, Tunisie. Tous droits réservés.</p>
+    </footer>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="supabase-client.js"></script>
+    <script defer src="supabase-shop.js"></script>
+    <script defer src="script.js"></script>
+</body>
+</html>

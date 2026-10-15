@@ -3,57 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Poster - Affiches et Posters à Sousse</title>
+    <title>La Poster - Accueil</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="home-page">
 
     <!-- En-tête et navigation -->
     <header>
-        <div class="logo">La Poster</div>
-        <nav id="nav-menu">
-            <a href="index.html" class="active">Accueil</a>
-            <a href="produits.html">Produits</a>
-            <a href="produit-vedette.html">Coup de cœur</a>
-            <a href="a-propos.html">À propos</a>
-            <a href="contact.html">Contact</a>
+        <nav>
+            <a href="index.html" class="logo logo-mark" aria-label="La Poster — accueil"><img src="images/logo-la-poster.png" alt="La Poster"></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="produits.html">Produits</a></li>
+                <li><a href="produit-vedette.html">Coup de cœur</a></li>
+                <li><a href="a-propos.html">À propos</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a class="cart-nav-link" href="panier.html">Panier <span class="cart-count" data-cart-count>0</span></a></li>
+            </ul>
         </nav>
-        <button id="menu-toggle" aria-label="Menu">☰</button>
     </header>
 
-    <!-- Section principale (Hero) -->
+    <!-- Section Accueil / Hero -->
     <section class="hero">
-        <img class="hero-logo" src="images/logo-la-poster.png" alt="Logo La Poster, Posters — Art for your walls">
-        <h1>Embellissez vos murs avec style</h1>
-        <p>Des posters esthétiques, originaux et personnalisés pour sublimer votre intérieur à Sousse.</p>
-        <a href="produits.html" class="btn">Découvrir nos collections</a>
+        <div class="hero-content">
+            <h1>ART POSTERS</h1>
+            <p>Des posters esthétiques, originaux et personnalisés pour une décoration qui vous ressemble.</p>
+            <a href="produits.html" class="btn">Découvrir nos posters</a>
+        </div>
+        <img class="hero-image" src="images/logo-la-poster.png" alt="Logo La Poster, Posters — Art for your walls">
     </section>
 
-    <!-- Présentation rapide -->
-    <section class="container">
-        <h2>Pourquoi choisir La Poster ?</h2>
-        <div class="features">
+    <!-- Section Présentation rapide -->
+    <div class="container">
+        <h2 style="text-align: center; color: var(--primary-color); margin-bottom: 1rem;">Notre Proposition de Valeur</h2>
+        <p style="text-align: center; max-width: 700px; margin: 0 auto 3rem auto;">Que vous souhaitiez décorer votre salon, votre chambre ou un café, nous vous offrons des créations uniques, une impression de qualité supérieure et des idées cadeaux originales.</p>
+        
+        <div class="grid">
             <div class="card">
-                <h3>Designs Originaux</h3>
-                <p>Des créations uniques pour donner une âme à votre décoration.</p>
+                <img src="images/poster-1.jpg.jpg" alt="Poster esthétique abstrait">
+                <div class="card-content">
+                    <h3>Posters Originaux</h3>
+                    <p>Des designs artistiques pensés pour sublimer vos espaces intérieurs.</p>
+                </div>
             </div>
             <div class="card">
-                <h3>Décoration Accessible</h3>
-                <p>L'art de qualité à portée de main pour tous les budgets.</p>
+                <img src="images/poster-2.jpg.jpg" alt="Création personnalisée sur mesure">
+                <div class="card-content">
+                    <h3>Sur Mesure</h3>
+                    <p>Envoyez-nous vos idées, nous créons le poster personnalisé parfait.</p>
+                </div>
             </div>
             <div class="card">
-                <h3>Sur Mesure</h3>
-                <p>Exprimez vos envies avec nos affiches personnalisées.</p>
+                <img src="images/poster-3.jpg.jpg" alt="Idée cadeau originale">
+                <div class="card-content">
+                    <h3>Idées Cadeaux</h3>
+                    <p>Faites plaisir à vos proches avec une décoration élégante et accessible.</p>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Pied de page -->
     <footer>
         <p>&copy; 2026 La Poster - Sousse, Tunisie. Tous droits réservés.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="supabase-client.js"></script>
+    <script defer src="supabase-shop.js"></script>
+    <script defer src="script.js"></script>
 </body>
 </html>
 

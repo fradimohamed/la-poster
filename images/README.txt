@@ -1,0 +1,1 @@
+Placez vos images ici sous les noms : poster-1.jpg, poster-2.jpg, poster-3.jpg

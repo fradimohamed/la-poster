@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Consultez les posters ajoutés à votre panier La Poster.">
+    <title>Mon panier | La Poster</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="cart-page">
+    <header>
+        <nav aria-label="Navigation principale">
+            <a href="index.html" class="logo logo-mark" aria-label="La Poster — accueil"><img src="images/logo-la-poster.png" alt="La Poster"></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="produits.html">Produits</a></li>
+                <li><a href="produit-vedette.html">Coup de cœur</a></li>
+                <li><a href="a-propos.html">À propos</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a class="cart-nav-link" href="panier.html" aria-current="page">Panier <span class="cart-count" data-cart-count>0</span></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container cart-page-content">
+        <p class="cart-eyebrow">LA POSTER · VOTRE SÉLECTION</p>
+        <h1 class="page-title">Votre <span class="title-pink">Panier</span></h1>
+
+        <section class="texture-panel cart-empty" id="cart-empty" hidden>
+            <div class="empty-cart-icon" aria-hidden="true">♡</div>
+            <h2>Votre panier est encore vide</h2>
+            <p>Parcourez nos posters et ajoutez vos coups de cœur ici.</p>
+            <a href="produits.html" class="btn">Découvrir les posters</a>
+        </section>
+
+        <section class="cart-layout" id="cart-content" hidden aria-label="Contenu du panier">
+            <div class="texture-panel cart-items-panel">
+                <div class="cart-items-heading">
+                    <h2>Vos posters</h2>
+                    <button id="clear-cart" class="clear-cart" type="button">Vider le panier</button>
+                </div>
+                <div class="cart-items" id="cart-items"></div>
+            </div>
+
+            <aside class="texture-panel order-summary">
+                <h2>Résumé de la commande</h2>
+                <p class="summary-line"><span>Articles</span><span id="cart-unit-count">0</span></p>
+                <p class="summary-line"><span>Sous-total</span><strong id="cart-subtotal">0 TND</strong></p>
+                <p class="summary-line"><span>Livraison</span><strong id="cart-shipping">À confirmer</strong></p>
+                <p class="checkout-note">Les frais de livraison ne sont pas encore définis et seront à confirmer.</p>
+                <p class="summary-line summary-total"><span>Total provisoire</span><strong id="cart-total">0 TND</strong></p>
+                <a id="checkout-link" class="btn checkout-button" href="checkout.html">Passer à la commande</a>
+                <p class="checkout-note">Commande de démonstration : aucun paiement réel ne sera effectué.</p>
+                <a class="continue-shopping" href="produits.html">← Continuer mes achats</a>
+            </aside>
+        </section>
+        <p class="cart-status" id="cart-status" role="status" aria-live="polite"></p>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 La Poster - Sousse, Tunisie. Tous droits réservés.</p>
+    </footer>
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="supabase-client.js"></script>
+    <script defer src="supabase-shop.js"></script>
+    <script defer src="script.js"></script>
+</body>
+</html>

@@ -3,55 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - La Poster</title>
+    <title>La Poster - Contact</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <div class="logo">La Poster</div>
-        <nav id="nav-menu">
-            <a href="index.html">Accueil</a>
-            <a href="produits.html">Produits</a>
-            <a href="produit-vedette.html">Coup de cœur</a>
-            <a href="a-propos.html">À propos</a>
-            <a href="contact.html" class="active">Contact</a>
+        <nav>
+            <a href="index.html" class="logo logo-mark" aria-label="La Poster — accueil"><img src="images/logo-la-poster.png" alt="La Poster"></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="produits.html">Produits</a></li>
+                <li><a href="produit-vedette.html">Coup de cœur</a></li>
+                <li><a href="a-propos.html">À propos</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a class="cart-nav-link" href="panier.html">Panier <span class="cart-count" data-cart-count>0</span></a></li>
+            </ul>
         </nav>
-        <button id="menu-toggle" aria-label="Menu">☰</button>
     </header>
 
-    <section class="container">
-        <h2>Contactez-nous</h2>
-        <p>Une question, une commande personnalisée ou un projet de décoration pour votre café ? Écrivez-nous !</p>
+    <div class="container">
+        <h1 class="page-title" style="text-align: center; margin-bottom: 1.5rem;"><span class="title-pink">Contactez</span>-nous</h1>
         
-        <div class="contact-grid">
-            <div class="contact-info">
-                <p><strong>Ville :</strong> Sousse, Tunisie</p>
-                <p><strong>Téléphone :</strong> +216 XX XXX XXX</p>
-                <p><strong>Email :</strong> contact@laposter.tn</p>
-                <p><strong>Instagram & Facebook :</strong> @laposter.sousse</p>
+        <div class="texture-panel" style="display: flex; flex-wrap: wrap; gap: 3rem; max-width: 900px; margin: 0 auto; padding: 2.5rem; border-radius: 8px;">
+            <div style="flex: 1; min-width: 280px;">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Nos Coordonnées</h3>
+                <p style="margin-bottom: 0.5rem;"><strong>Ville :</strong> Sousse, Tunisie</p>
+                <p style="margin-bottom: 0.5rem;"><strong>Email :</strong> fradimohamed31@gmail.com</p>
+                <p style="margin-bottom: 0.5rem;"><strong>Téléphone :</strong> +216 24418714</p>
+                <p style="margin-bottom: 1.5rem;"><strong>Instagram :</strong> laposter_arts</p>
+                <p>N'hésite pas à nous envoyer un message direct sur Instagram pour toute commande personnalisée !</p>
             </div>
-            
-            <form id="contact-form" class="contact-form">
-                <label for="name">Votre nom :</label>
-                <input type="text" id="name" required>
 
-                <label for="email">Votre email :</label>
-                <input type="email" id="email" required>
-
-                <label for="message">Votre message :</label>
-                <textarea id="message" rows="4" required></textarea>
-
-                <button type="submit" class="btn">Envoyer le message</button>
-                <p id="form-msg" class="success-msg" style="display:none;">Merci ! Votre message a bien été simulé.</p>
-            </form>
+            <div style="flex: 1; min-width: 280px;">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Envoyez-nous un message</h3>
+                <form onsubmit="event.preventDefault(); alert('Merci ! Votre message a bien été simulé.');">
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.3rem;">Votre Nom</label>
+                        <input type="text" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" required>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.3rem;">Votre Email</label>
+                        <input type="email" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" required>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.3rem;">Votre Message</label>
+                        <textarea style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; height: 100px;" required></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="border: none; cursor: pointer;">Envoyer</button>
+                </form>
+            </div>
         </div>
-    </section>
+
+        <section class="texture-panel feedback-panel" aria-labelledby="feedback-title">
+            <div class="feedback-intro">
+                <p class="feedback-eyebrow">VOTRE AVIS COMPTE</p>
+                <h2 id="feedback-title">Laissez-nous un avis</h2>
+                <p>Vous avez commandé chez La Poster ? Partagez votre expérience avec nous.</p>
+            </div>
+            <form id="feedback-form">
+                <fieldset class="rating-fieldset">
+                    <legend>Votre note</legend>
+                    <div class="star-rating" role="group" aria-label="Choisissez une note de 1 à 5 étoiles">
+                        <button type="button" class="rating-star" data-rating="1" aria-pressed="false" aria-label="1 étoile">★</button>
+                        <button type="button" class="rating-star" data-rating="2" aria-pressed="false" aria-label="2 étoiles">★</button>
+                        <button type="button" class="rating-star" data-rating="3" aria-pressed="false" aria-label="3 étoiles">★</button>
+                        <button type="button" class="rating-star" data-rating="4" aria-pressed="false" aria-label="4 étoiles">★</button>
+                        <button type="button" class="rating-star" data-rating="5" aria-pressed="false" aria-label="5 étoiles">★</button>
+                    </div>
+                    <input type="hidden" id="feedback-rating" name="rating">
+                </fieldset>
+                <label class="feedback-message-label" for="feedback-message">Votre commentaire
+                    <textarea id="feedback-message" name="comment" rows="4" placeholder="Qu’avez-vous pensé de votre poster ?" required></textarea>
+                </label>
+                <button class="btn feedback-submit" type="submit" disabled>Envoyer mon avis</button>
+                <p class="feedback-success" id="feedback-success" role="status" aria-live="polite" hidden>Merci pour votre avis !</p>
+            </form>
+        </section>
+    </div>
 
     <footer>
         <p>&copy; 2026 La Poster - Sousse, Tunisie. Tous droits réservés.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="supabase-client.js"></script>
+    <script defer src="supabase-shop.js"></script>
+    <script defer src="script.js"></script>
 </body>
 </html>

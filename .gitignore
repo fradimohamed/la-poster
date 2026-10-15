@@ -1,1 +1,4 @@
-la-poster/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
