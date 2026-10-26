@@ -4,9 +4,9 @@
  * N'utilisez jamais ici une clé secret ou service_role : ce fichier est public.
  */
 (function initialiseLaPosterSupabase() {
-  const projectUrl = "https://VOTRE-PROJET.supabase.co";
-  const publishableKey = "sb_publishable_REMPLACER_PAR_VOTRE_CLE";
-  const placeholdersRemain = projectUrl.includes("VOTRE-PROJET") || publishableKey.includes("REMPLACER");
+  const projectUrl = "https://lanqonokqcsnxhkxpujp.supabase.co";
+  const publishableKey = "sb_publishable_bQ8Abuc1B3-wCkxbAMxE-g_TDoNztek";
+  const placeholdersRemain = projectUrl.includes("ttps://lanqonokqcsnxhkxpujp.supabase.co") || publishableKey.includes("sb_publishable_bQ8Abuc1B3-wCkxbAMxE-g_TDoNztek");
 
   window.LaPosterConfig = {
     projectUrl,
@@ -25,3 +25,4 @@
     auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
   });
 })();
+

@@ -14,9 +14,10 @@ Boutique statique d'affiches musicales, développée en HTML, CSS et JavaScript.
 
 ## Connexion Supabase
 
-1. Remplacez l'URL et la clé publishable dans `https://lanqonokqcsnxhkxpujp.supabase.co`.
-2. Dans un nouveau projet Supabase, exécutez `supabase-setup.sql`, puis `supabase-orders.sql`.
+1. Remplacez l'URL et la clé publishable dans `supabase-client.js`.
+2. Dans un nouveau projet Supabase, exécutez `supabase-setup.sql`, puis `supabase-orders.sql`. N'exécutez pas le script d'installation sur un schéma existant avant d'en vérifier la structure.
 3. Attribuez le rôle administrateur manuellement avec `supabase-admin.sql`.
 4. Consultez [SUPABASE.md](SUPABASE.md) pour les réglages Auth, le diagnostic, les limites de démonstration et la publication Vercel.
 
-Le paiement n'est pas réel. La livraison est à confirmer et n'est pas incluse dans le total provisoire.
+Le site utilise actuellement GitHub Pages; le TP3 demande une publication Vercel séparée. Le paiement n'est pas réel. La livraison est à confirmer et n'est pas incluse dans le total provisoire. Aucune clé privée Supabase ne doit être publiée dans le navigateur.
+

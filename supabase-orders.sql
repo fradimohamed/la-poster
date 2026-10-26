@@ -20,6 +20,13 @@ create table if not exists public.orders (
 create index if not exists orders_user_created_idx on public.orders(user_id, created_at desc);
 create index if not exists orders_status_created_idx on public.orders(status, created_at desc);
 
+create or replace function public.set_order_updated_at()
+returns trigger language plpgsql set search_path = ''
+as $$ begin new.updated_at = now(); return new; end; $$;
+drop trigger if exists set_order_updated_at on public.orders;
+create trigger set_order_updated_at before update on public.orders
+for each row execute function public.set_order_updated_at();
+
 alter table public.orders enable row level security;
 drop policy if exists "read own orders or admin" on public.orders;
 create policy "read own orders or admin" on public.orders for select to authenticated using (user_id = (select auth.uid()) or (select public.is_shop_admin()));
@@ -83,7 +90,7 @@ begin
     if not found then raise exception 'Produit indisponible'; end if;
     if v_product.price_millimes > 9000000000000 / v_quantity then raise exception 'Montant invalide'; end if;
     v_subtotal := v_subtotal + v_product.price_millimes * v_quantity;
-    v_lines := v_lines || jsonb_build_array(jsonb_build_object('id',v_product.id,'name',v_product.name,'artist',v_product.artist,'category',v_product.category,'image_url',v_product.image_url,'unit_price_millimes',v_product.price_millimes,'quantity',v_quantity,'line_total_millimes',v_product.price_millimes * v_quantity));
+    v_lines := v_lines || jsonb_build_array(jsonb_build_object('id',v_product.id,'name',v_product.name,'artist',v_product.artist,'category',v_product.category,'description',v_product.description,'characteristics',v_product.characteristics,'image_url',v_product.image_url,'unit_price_millimes',v_product.price_millimes,'quantity',v_quantity,'line_total_millimes',v_product.price_millimes * v_quantity));
   end loop;
   if p_expected_total_millimes <> v_subtotal + v_shipping then raise exception 'Le catalogue ou le total a changé. Rechargez la page.'; end if;
   insert into public.orders (id,reference,user_id,attempt_id,request_fingerprint,items,shipping_address,payment_method,subtotal_millimes,shipping_millimes,total_millimes)
@@ -105,3 +112,4 @@ select
   has_table_privilege('authenticated', 'public.orders', 'INSERT') as customer_can_insert_orders_directly,
   row_security_active('public.orders') as orders_rls_active;
 -- Attendu : false, true, false. row_security_active dépend du rôle SQL utilisé ici.
+

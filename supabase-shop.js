@@ -20,6 +20,10 @@
   const cart = () => cartRead().map((entry) => { const p = api.products.find((product) => product.id === entry.id) || FALLBACK.find((product) => product.id === entry.id); return p && { ...p, quantity: Math.min(99, Math.max(1, Math.floor(Number(entry.quantity) || 1))) }; }).filter(Boolean);
   const totals = (items) => ({ count: items.reduce((n, x) => n + x.quantity, 0), subtotal: items.reduce((n, x) => n + Number(x.price_millimes) * x.quantity, 0) });
   const safeImage = (p) => p.image_url || p.image || "images/poster-1.jpg.jpg";
+  const validImageSource = (value) => {
+    if (/^images\/[A-Za-z0-9._/-]+$/.test(value) && !value.split("/").includes("..")) return true;
+    try { return new URL(value).protocol === "https:"; } catch { return false; }
+  };
   function status(text) { const el = document.querySelector("#cart-status"); if (el) el.textContent = text || ""; }
 
   function renderProductCards() {
@@ -184,39 +188,71 @@
     document.querySelector("#admin-dashboard").hidden = false;
     const statusSelect = document.querySelector("#admin-status-filter");
     const orders = document.querySelector("#admin-orders");
-    async function loadOrders() {
-      orders.replaceChildren(); const { data, error } = await client().from("orders").select("id,reference,user_id,items,total_millimes,status,created_at,shipping_address").order("created_at", { ascending: false }).limit(50);
-      if (error) return message(`Chargement commandes impossible : ${error.message}`);
-      const filtered = statusSelect.value ? data.filter((x) => x.status === statusSelect.value) : data;
-      filtered.forEach((o) => {
+    const emptyOrders = document.querySelector("#admin-order-empty");
+    const moreOrders = document.querySelector("#admin-load-more");
+    const pageSize = 50; let orderOffset = 0; let loadingOrders = false;
+    const statusLabels = { nouvelle: "Nouvelle", en_preparation: "En préparation", terminee: "Terminée", annulee: "Annulée" };
+    async function loadOrders(reset = false) {
+      if (loadingOrders) return;
+      if (reset) { orderOffset = 0; orders.replaceChildren(); emptyOrders.hidden = true; }
+      loadingOrders = true; moreOrders.disabled = true;
+      let query = client().from("orders").select("id,reference,user_id,items,total_millimes,shipping_millimes,status,created_at,updated_at,shipping_address,payment_method").order("created_at", { ascending: false }).range(orderOffset, orderOffset + pageSize - 1);
+      if (statusSelect.value) query = query.eq("status", statusSelect.value);
+      const { data, error } = await query;
+      loadingOrders = false; moreOrders.disabled = false;
+      if (error) { message(`Chargement des commandes impossible : ${error.message}`); moreOrders.hidden = true; return; }
+      if (orderOffset === 0 && data.length === 0) emptyOrders.hidden = false;
+      data.forEach((o) => {
         const card = document.createElement("article"); card.className = "order-history-card";
         const h = document.createElement("h3"); h.textContent = `${o.reference} · ${formatMoney(o.total_millimes)}`;
-        const p = document.createElement("p"); p.textContent = `${o.created_at} · ${o.shipping_address.email || ""} · ${o.status}`;
-        const select = document.createElement("select"); select.setAttribute("aria-label", `Statut ${o.reference}`);
-        ["nouvelle", "en_preparation", "terminee", "annulee"].forEach((s) => { const option = document.createElement("option"); option.value = s; option.textContent = s; option.selected = o.status === s; select.append(option); });
-        select.addEventListener("change", async () => { const old = o.status; const { error: e } = await client().from("orders").update({ status: select.value }).eq("id", o.id).eq("status", old); if (e) { message(`Mise à jour refusée : ${e.message}`); select.value = old; } else { o.status = select.value; p.textContent = `${o.created_at} · ${o.shipping_address.email || ""} · ${o.status}`; } });
-        card.append(h, p, select); orders.append(card);
+        const address = o.shipping_address || {};
+        const customer = [address.first_name, address.last_name].filter(Boolean).join(" ");
+        const p = document.createElement("p"); p.textContent = `${new Date(o.created_at).toLocaleString("fr-TN")} · ${customer || "Client"} · ${address.email || "E-mail indisponible"} · ${statusLabels[o.status] || o.status}`;
+        const select = document.createElement("select"); select.setAttribute("aria-label", `Statut de la commande ${o.reference}`);
+        Object.entries(statusLabels).forEach(([value, label]) => { const option = document.createElement("option"); option.value = value; option.textContent = label; option.selected = o.status === value; select.append(option); });
+        select.addEventListener("change", async () => {
+          const previous = o.status; const proposed = select.value; select.disabled = true;
+          const { data: updated, error: updateError } = await client().from("orders").update({ status: proposed }).eq("id", o.id).eq("status", previous).select("id,status").maybeSingle();
+          select.disabled = false;
+          if (updateError) { message(`Statut non modifié : ${updateError.message}`); select.value = previous; return; }
+          if (!updated) { message("Cette commande a été modifiée ailleurs. La liste a été actualisée pour afficher son statut actuel.", "info"); await loadOrders(true); return; }
+          message(`Statut de ${o.reference} enregistré.`, "success"); await loadOrders(true);
+        });
+        const detail = document.createElement("details"); const summary = document.createElement("summary"); summary.textContent = "Détails de la commande"; detail.append(summary);
+        const itemList = document.createElement("ul");
+        (Array.isArray(o.items) ? o.items : []).forEach((item) => { const li = document.createElement("li"); li.textContent = `${item.name} × ${item.quantity} — ${formatMoney(item.unit_price_millimes)} l’unité (${formatMoney(item.line_total_millimes)})`; itemList.append(li); });
+        const shipping = document.createElement("p"); shipping.textContent = `Livraison : ${formatMoney(o.shipping_millimes)} · ${address.address || ""}, ${address.postal_code || ""} ${address.city || ""}, ${address.country || ""} · ${address.phone || ""}`;
+        const payment = document.createElement("p"); payment.textContent = `Paiement simulé : ${o.payment_method === "card-demo" ? "Carte bancaire" : "Paiement à la livraison"}`;
+        detail.append(itemList, shipping, payment);
+        card.append(h, p, select, detail); orders.append(card);
       });
+      orderOffset += data.length; moreOrders.hidden = data.length < pageSize;
     }
-    statusSelect.addEventListener("change", loadOrders); await loadOrders();
+    statusSelect.addEventListener("change", () => loadOrders(true));
+    document.querySelector("#admin-refresh-orders")?.addEventListener("click", () => loadOrders(true));
+    moreOrders.addEventListener("click", () => loadOrders()); await loadOrders(true);
     const productForm = document.querySelector("#admin-product-form");
     productForm.addEventListener("submit", async (event) => {
       event.preventDefault(); if (!productForm.reportValidity()) return;
-      const v = formObject(productForm); const row = { id: String(v.id).trim(), name: String(v.name).trim(), artist: String(v.artist).trim(), category: String(v.category), description: String(v.description).trim(), price_millimes: Math.round(Number(v.price) * 1000), image_url: String(v.image_url).trim(), available: v.available === "on" };
+      const v = formObject(productForm); const row = { id: String(v.id).trim(), name: String(v.name).trim(), artist: String(v.artist).trim(), category: String(v.category), description: String(v.description).trim(), characteristics: String(v.characteristics).trim(), price_millimes: Math.round(Number(v.price) * 1000), image_url: String(v.image_url).trim(), available: v.available === "on" };
       if (!/^[a-z0-9-]{2,60}$/.test(row.id) || !Number.isSafeInteger(row.price_millimes) || row.price_millimes <= 0) return message("Vérifiez l’identifiant et le prix.");
-      const { error } = await client().from("products").upsert(row); if (error) return message(`Produit non enregistré : ${error.message}`);
-      productForm.reset(); message("Produit enregistré.", "success"); await loadProducts(); renderProductCards();
+      if (!validImageSource(row.image_url)) return message("L’image doit être un chemin existant dans images/ ou une URL publique HTTPS.");
+      const submit = productForm.querySelector('[type="submit"]'); submit.disabled = true;
+      const { error } = await client().from("products").upsert(row); submit.disabled = false;
+      if (error) return message(`Produit non enregistré : ${error.message}`);
+      productForm.reset(); productForm.elements.id.readOnly = false; message("Produit enregistré.", "success"); await loadAdminProducts(); await loadProducts(); renderProductCards(); renderFeaturedProduct();
     });
     const productList = document.querySelector("#admin-products");
     async function loadAdminProducts() {
-      const { data, error } = await client().from("products").select("id,name,artist,category,description,price_millimes,image_url,available").order("name"); if (error) return message(error.message);
-      productList.replaceChildren(); data.forEach((p) => { const row = document.createElement("div"); row.className = "order-history-card"; const label = document.createElement("span"); label.textContent = `${p.name} · ${formatMoney(p.price_millimes)} · ${p.available ? "disponible" : "masqué"}`; const edit = document.createElement("button"); edit.type = "button"; edit.className = "btn"; edit.textContent = "Modifier"; edit.addEventListener("click", () => { ["id","name","artist","category","description","image_url"].forEach((key) => { productForm.elements[key].value = p[key] || ""; }); productForm.elements.price.value = p.price_millimes / 1000; productForm.elements.available.checked = p.available; productForm.scrollIntoView({ behavior: "smooth", block: "center" }); }); const toggle = document.createElement("button"); toggle.type = "button"; toggle.className = "btn"; toggle.textContent = p.available ? "Masquer" : "Publier"; toggle.addEventListener("click", async () => { const { error: e } = await client().from("products").update({ available: !p.available }).eq("id", p.id); if (e) message(e.message); else { await loadAdminProducts(); await loadProducts(); renderProductCards(); renderFeaturedProduct(); } }); row.append(label, edit, toggle); productList.append(row); });
+      const { data, error } = await client().from("products").select("id,name,artist,category,description,characteristics,price_millimes,image_url,available").order("name"); if (error) return message(error.message);
+      productList.replaceChildren(); data.forEach((p) => { const row = document.createElement("div"); row.className = "order-history-card"; const label = document.createElement("span"); label.textContent = `${p.name} · ${formatMoney(p.price_millimes)} · ${p.available ? "disponible" : "masqué"}`; const edit = document.createElement("button"); edit.type = "button"; edit.className = "btn"; edit.textContent = "Modifier"; edit.addEventListener("click", () => { ["id","name","artist","category","description","characteristics","image_url"].forEach((key) => { productForm.elements[key].value = p[key] || ""; }); productForm.elements.price.value = p.price_millimes / 1000; productForm.elements.available.checked = p.available; productForm.elements.id.readOnly = true; productForm.scrollIntoView({ behavior: "smooth", block: "center" }); }); const toggle = document.createElement("button"); toggle.type = "button"; toggle.className = "btn"; toggle.textContent = p.available ? "Masquer" : "Publier"; toggle.addEventListener("click", async () => { const { error: e } = await client().from("products").update({ available: !p.available }).eq("id", p.id); if (e) message(e.message); else { await loadAdminProducts(); await loadProducts(); renderProductCards(); renderFeaturedProduct(); } }); const remove = document.createElement("button"); remove.type = "button"; remove.className = "btn"; remove.textContent = "Supprimer"; remove.addEventListener("click", async () => { if (!window.confirm(`Supprimer « ${p.name} » du catalogue ? Les articles des commandes passées restent conservés.`)) return; remove.disabled = true; const { error: removeError } = await client().from("products").delete().eq("id", p.id); remove.disabled = false; if (removeError) { message(`Suppression impossible : ${removeError.message}`); return; } message("Produit supprimé du catalogue.", "success"); await loadAdminProducts(); await loadProducts(); renderProductCards(); renderFeaturedProduct(); }); row.append(label, edit, toggle, remove); productList.append(row); });
     }
     await loadAdminProducts();
+    document.querySelector("#admin-new-product")?.addEventListener("click", () => { productForm.reset(); productForm.elements.id.readOnly = false; productForm.elements.id.focus(); });
   }
   async function loadProducts() {
     if (!client()) { api.products = FALLBACK; return; }
-    const { data, error } = await client().from("products").select("id,name,artist,category,description,price_millimes,image_url,available").order("name");
+    const { data, error } = await client().from("products").select("id,name,artist,category,description,characteristics,price_millimes,image_url,available").order("name");
     api.products = error ? FALLBACK : (data || []); if (error) console.warn("Catalogue Supabase indisponible; catalogue embarqué utilisé.", error.message);
   }
   function refreshNavigation() {
@@ -249,3 +285,4 @@
   });
   window.LaPosterShop = api;
 })();
+
