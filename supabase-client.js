@@ -6,7 +6,8 @@
 (function initialiseLaPosterSupabase() {
   const projectUrl = "https://lanqonokqcsnxhkxpujp.supabase.co";
   const publishableKey = "sb_publishable_bQ8Abuc1B3-wCkxbAMxE-g_TDoNztek";
-  const placeholdersRemain = projectUrl.includes("ttps://lanqonokqcsnxhkxpujp.supabase.co") || publishableKey.includes("sb_publishable_bQ8Abuc1B3-wCkxbAMxE-g_TDoNztek");
+  const placeholdersRemain = /YOUR_SUPABASE_URL|PROJECT_URL|SUPABASE_URL/i.test(projectUrl)
+    || /YOUR_PUBLISHABLE_KEY|PUBLISHABLE_KEY|ANON_KEY/i.test(publishableKey);
 
   window.LaPosterConfig = {
     projectUrl,
