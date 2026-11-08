@@ -3,54 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nos Produits - La Poster</title>
+    <meta name="description" content="Découvrez notre sélection de posters musicaux : IGOR, I AM MUSIC et AM. Chaque poster est à 20 TND.">
+    <title>Posters musicaux | La Poster</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-
-    <header>
-        <div class="logo">La Poster</div>
-        <nav id="nav-menu">
-            <a href="index.html">Accueil</a>
-            <a href="produits.html" class="active">Produits</a>
-            <a href="produit-vedette.html">Coup de cœur</a>
-            <a href="a-propos.html">À propos</a>
-            <a href="contact.html">Contact</a>
+<body class="product-page">
+    <div class="shop-announcement">COLLECTION MUSIQUE <span>·</span> POSTERS À PARTIR DE 20 TND</div>
+    <header class="shop-header">
+        <nav class="shop-nav" aria-label="Navigation principale">
+            <a href="index.html" class="logo logo-mark" aria-label="La Poster — accueil"><img src="images/logo-la-poster.png" alt="La Poster"></a>
+            <form class="shop-search" id="product-search-form" role="search">
+                <label class="sr-only" for="product-search">Rechercher un poster ou un artiste</label>
+                <input id="product-search" type="search" placeholder="Rechercher un poster, un artiste…">
+                <button type="submit" aria-label="Rechercher">⌕</button>
+            </form>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="produits.html" aria-current="page">Produits</a></li>
+                <li><a href="produit-vedette.html">Coup de cœur</a></li>
+                <li><a href="a-propos.html">À propos</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a class="cart-nav-link" href="panier.html">Panier <span class="cart-count" data-cart-count>0</span></a></li>
+            </ul>
         </nav>
-        <button id="menu-toggle" aria-label="Menu">☰</button>
     </header>
+    <nav class="category-nav" aria-label="Catégories de posters">
+        <a href="produits.html" class="category-nav-active">Explorer</a>
+        <a href="#hip-hop">Hip-hop</a>
+        <a href="#rock">Rock</a>
+        <a href="#catalogue">Tous les posters</a>
+    </nav>
 
-    <section class="container">
-        <h2>Nos Collections de Posters</h2>
-        <div class="product-grid">
-            <div class="product-card">
-                <img src="images/poster-minimaliste.jpg" alt="Poster minimaliste abstrait aux tons chauds">
-                <h3>Poster Minimaliste</h3>
-                <p class="category">Catégorie : Décoration murale</p>
-                <p class="price">35 TND</p>
-                <a href="produit-vedette.html" class="btn-small">Voir le détail</a>
+    <main class="shop-page">
+        <div class="shop-breadcrumb"><a href="index.html">Accueil</a><span>/</span><span>Posters musicaux</span></div>
+
+        <section class="shop-intro" aria-labelledby="shop-title">
+            <p class="shop-eyebrow">LA POSTER <span>›</span> MUSIQUE</p>
+            <h1 id="shop-title" class="page-title"><span class="shop-title-main">POSTERS POUR</span> <span class="shop-title-accent">« MUSIC »</span></h1>
+            <p class="shop-description">Découvre nos posters inspirés par les albums et artistes qui font la bande-son de tes journées.</p>
+        </section>
+
+        <a class="creator-banner" href="#catalogue">
+            <span class="creator-banner-mark" aria-hidden="true">LP</span>
+            <span><strong>La musique prend sa place.</strong><small>Parcours notre sélection de posters musicaux.</small></span>
+            <span class="creator-banner-link">Découvrir la sélection <b aria-hidden="true">→</b></span>
+        </a>
+
+        <section class="catalog" id="catalogue" aria-label="Catalogue de posters musicaux">
+            <aside class="shop-sidebar" aria-label="Filtres de produits">
+                <h2>Filtrer les posters</h2>
+                <div class="sidebar-filter-group">
+                    <h3>Genre musical</h3>
+                    <div class="sidebar-filter-options" role="group" aria-label="Filtrer par genre musical">
+                        <button class="filter-chip is-active" type="button" data-filter="all" aria-pressed="true">Tous les genres <span>3</span></button>
+                        <button class="filter-chip" id="hip-hop" type="button" data-filter="hip-hop" aria-pressed="false">Hip-hop <span>2</span></button>
+                        <button class="filter-chip" id="rock" type="button" data-filter="rock" aria-pressed="false">Rock <span>1</span></button>
+                    </div>
+                </div>
+                <div class="sidebar-filter-group artist-filter">
+                    <h3>Artistes</h3>
+                    <p>Tyler, The Creator</p>
+                    <p>Playboi Carti</p>
+                    <p>Arctic Monkeys</p>
+                </div>
+                <div class="sidebar-price-note"><span aria-hidden="true">♡</span> Le même prix pour chaque poster : <strong>20 TND</strong></div>
+            </aside>
+
+            <div class="catalog-results">
+                <div class="catalog-heading">
+                    <div>
+                        <h2>Posters musicaux</h2>
+                        <p><span id="product-count">3</span> résultats</p>
+                    </div>
+                    <label class="sort-control" for="product-sort">Trier par
+                        <select id="product-sort">
+                            <option value="featured">En vedette</option>
+                            <option value="name">Nom du poster</option>
+                            <option value="price-low">Prix croissant</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="shop-grid" id="product-grid">
+                <article class="shop-card" data-category="hip-hop" data-name="igor tyler the creator music poster" data-price="20">
+                    <a class="product-art" href="contact.html" aria-label="Découvrir le poster IGOR de Tyler, The Creator">
+                        <span class="product-tag">HIP-HOP</span>
+                        <img src="images/poster-1.jpg.jpg" alt="Poster IGOR de Tyler, The Creator" loading="lazy">
+                        <span class="art-action">Voir le poster <span aria-hidden="true">↗</span></span>
+                    </a>
+                    <div class="shop-card-info">
+                        <p class="artist-name">TYLER, THE CREATOR</p>
+                        <h3 class="album-title album-title-blue">IGOR</h3>
+                        <div class="product-buy-row"><span class="shop-price">20 <small>TND</small></span><button class="btn shop-buy add-to-cart" type="button" data-product-id="igor" data-name="IGOR" data-artist="TYLER, THE CREATOR" data-price="20" data-image="images/poster-1.jpg.jpg">Ajouter au panier</button></div>
+                    </div>
+                </article>
+
+                <article class="shop-card" data-category="hip-hop" data-name="i am music playboi carti poster" data-price="20">
+                    <a class="product-art" href="contact.html" aria-label="Découvrir le poster I AM MUSIC de Playboi Carti">
+                        <span class="product-tag">HIP-HOP</span>
+                        <img src="images/poster-2.jpg.jpg" alt="Poster I AM MUSIC de Playboi Carti" loading="lazy">
+                        <span class="art-action">Voir le poster <span aria-hidden="true">↗</span></span>
+                    </a>
+                    <div class="shop-card-info">
+                        <p class="artist-name">PLAYBOI CARTI</p>
+                        <h3 class="album-title album-title-pink">I AM MUSIC</h3>
+                        <div class="product-buy-row"><span class="shop-price">20 <small>TND</small></span><button class="btn shop-buy add-to-cart" type="button" data-product-id="i-am-music" data-name="I AM MUSIC" data-artist="PLAYBOI CARTI" data-price="20" data-image="images/poster-2.jpg.jpg">Ajouter au panier</button></div>
+                    </div>
+                </article>
+
+                <article class="shop-card" data-category="rock" data-name="am arctic monkeys music poster" data-price="20">
+                    <a class="product-art" href="contact.html" aria-label="Découvrir le poster AM d’Arctic Monkeys">
+                        <span class="product-tag">ROCK</span>
+                        <img src="images/poster-3.jpg.jpg" alt="Poster AM d’Arctic Monkeys" loading="lazy">
+                        <span class="art-action">Voir le poster <span aria-hidden="true">↗</span></span>
+                    </a>
+                    <div class="shop-card-info">
+                        <p class="artist-name">ARCTIC MONKEYS</p>
+                        <h3 class="album-title album-title-red">AM</h3>
+                        <div class="product-buy-row"><span class="shop-price">20 <small>TND</small></span><button class="btn shop-buy add-to-cart" type="button" data-product-id="am" data-name="AM" data-artist="ARCTIC MONKEYS" data-price="20" data-image="images/poster-3.jpg.jpg">Ajouter au panier</button></div>
+                    </div>
+                </article>
+                </div>
+                <p class="empty-results" id="empty-results" hidden>Aucun poster ne correspond à votre recherche.</p>
             </div>
-            <div class="product-card">
-                <img src="images/poster-citation.jpg" alt="Poster typographique avec une citation inspirante">
-                <h3>Poster Citation</h3>
-                <p class="category">Catégorie : Typographie</p>
-                <p class="price">30 TND</p>
-                <a href="produit-vedette.html" class="btn-small">Voir le détail</a>
-            </div>
-            <div class="product-card">
-                <img src="images/poster-sur-mesure.jpg" alt="Exemple de poster personnalisé avec un design unique">
-                <h3>Poster Personnalisé</h3>
-                <p class="category">Catégorie : Sur-mesure</p>
-                <p class="price">45 TND</p>
-                <a href="produit-vedette.html" class="btn-small">Voir le détail</a>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2026 La Poster - Sousse, Tunisie. Tous droits réservés.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="supabase-client.js"></script>
+    <script defer src="supabase-shop.js"></script>
+    <script defer src="script.js"></script>
 </body>
 </html>

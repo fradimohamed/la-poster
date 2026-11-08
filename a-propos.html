@@ -3,35 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>À propos - La Poster</title>
+    <title>La Poster - À propos</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <div class="logo">La Poster</div>
-        <nav id="nav-menu">
-            <a href="index.html">Accueil</a>
-            <a href="produits.html">Produits</a>
-            <a href="produit-vedette.html">Coup de cœur</a>
-            <a href="a-propos.html" class="active">À propos</a>
-            <a href="contact.html">Contact</a>
+        <nav>
+            <a href="index.html" class="logo logo-mark" aria-label="La Poster — accueil"><img src="images/logo-la-poster.png" alt="La Poster"></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="produits.html">Produits</a></li>
+                <li><a href="produit-vedette.html">Coup de cœur</a></li>
+                <li><a href="a-propos.html">À propos</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a class="cart-nav-link" href="panier.html">Panier <span class="cart-count" data-cart-count>0</span></a></li>
+            </ul>
         </nav>
-        <button id="menu-toggle" aria-label="Menu">☰</button>
     </header>
 
-    <section class="container">
-        <h2>Notre Histoire & Nos Valeurs</h2>
-        <p>Basée à <strong>Sousse</strong>, <strong>La Poster</strong> est né d'une passion pour le design, l'art visuel et la décoration d'intérieur accessible. Notre mission est d'habiller vos murs avec des créations originales qui vous ressemblent.</p>
+    <div class="container">
+        <h1 class="page-title" style="text-align: center; margin-bottom: 1.5rem;">À propos de <span class="title-pink">La Poster</span></h1>
         
-        <h3>Ce qui nous inspire</h3>
-        <p>Que vous soyez étudiant, jeune actif, ou que vous souhaitiez simplement réchauffer l'ambiance de votre salon ou de votre café, nous sélectionnons et créons des visuels artistiques, élégants et chaleureux.</p>
-    </section>
+        <div class="texture-panel" style="max-width: 800px; margin: 0 auto; padding: 2.5rem; border-radius: 8px;">
+            <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">Notre Histoire</h3>
+            <p style="margin-bottom: 1.5rem;">Basée à Sousse, **La Poster** est né d'une passion simple : rendre l'art et la décoration murale accessibles à tous. Nous croyons qu'un simple poster bien choisi peut complètement transformer l'ambiance d'une pièce, qu'il s'agisse d'une chambre d'étudiant, d'un salon chaleureux ou d'un café branché.</p>
+            
+            <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">Notre Mission</h3>
+            <p style="margin-bottom: 1.5rem;">Proposer des créations originales, esthétiques et de grande qualité, tout en restant à l'écoute de nos clients pour des projets personnalisés sur mesure.</p>
+
+            <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">Nos Engagements</h3>
+            <ul style="margin-left: 1.5rem;">
+                <li>Conseils personnalisés pour chaque client</li>
+                <li>Réponses rapides sur nos réseaux sociaux (Instagram & Facebook)</li>
+                <li>Partenariats avec des imprimeurs locaux de confiance</li>
+            </ul>
+        </div>
+    </div>
 
     <footer>
         <p>&copy; 2026 La Poster - Sousse, Tunisie. Tous droits réservés.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="supabase-client.js"></script>
+    <script defer src="supabase-shop.js"></script>
+    <script defer src="script.js"></script>
 </body>
 </html>
