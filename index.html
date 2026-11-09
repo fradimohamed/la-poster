@@ -1,51 +1,55 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-     <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Affiches et posters à Sousse | La Poster</title>
+    <title>Affiches et posters à Sousse | La Poster,boutique en ligne</title>
     <meta name="description" content="Découvrez La Poster : affiches et posters pour décorer votre intérieur à Sousse. Nouveautés, coups de cœur et commande simple.">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="home-page">
 
     <!-- En-tête et navigation -->
     <header>
-        <div class="logo">La Poster</div>
-        <nav id="nav-menu">
-            <a href="index.html" class="active">Accueil</a>
-            <a href="produits.html">Produits</a>
-            <a href="produit-vedette.html">Coup de cœur</a>
-            <a href="a-propos.html">À propos</a>
-            <a href="contact.html">Contact</a>
+        <nav>
+            <a href="index.html" class="logo logo-mark" aria-label="La Poster — accueil"><img src="images/logo-la-poster.png" alt="La Poster"></a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Accueil</a></li>
+                <li><a href="produits.html">Produits</a></li>
+                <li><a href="produit-vedette.html">Coup de cœur</a></li>
+                <li><a href="a-propos.html">À propos</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a class="cart-nav-link" href="panier.html">Panier <span class="cart-count" data-cart-count>0</span></a></li>
+            </ul>
         </nav>
-        <button id="menu-toggle" aria-label="Menu">☰</button>
     </header>
 
-    <!-- Section principale (Hero) -->
+    <!-- Section principale : le contenu conserve les textes actuels et reprend la structure prévue par le CSS -->
     <section class="hero">
-        <img class="hero-logo" src="images/logo-la-poster.png" alt="Logo La Poster, Posters — Art for your walls">
-        <h1>Affiches et posters à Sousse</h1>
-        <p>Des posters esthétiques, originaux et personnalisés pour sublimer votre intérieur à Sousse.</p>
-        <a href="produits.html" class="btn">Découvrir nos collections</a>
+        <div class="hero-content">
+            <h1>Affiches et posters à Sousse</h1>
+            <p>Des posters esthétiques, originaux et personnalisés pour sublimer votre intérieur à Sousse.</p>
+            <a href="produits.html" class="btn">Découvrir nos collections</a>
+        </div>
+        <img class="hero-image" src="images/logo-la-poster.png" alt="Logo La Poster, Posters — Art for your walls">
     </section>
 
     <!-- Présentation rapide -->
     <section class="container">
-        <h2>Pourquoi choisir La Poster ?</h2>
-        <div class="features">
-            <div class="card">
+        <h2 style="text-align: center; color: var(--primary-color); margin-bottom: 1rem;">Pourquoi choisir La Poster ?</h2>
+        <div class="grid">
+            <div class="card"><div class="card-content">
                 <h3>Designs Originaux</h3>
                 <p>Des créations uniques pour donner une âme à votre décoration.</p>
-            </div>
-            <div class="card">
+            </div></div>
+            <div class="card"><div class="card-content">
                 <h3>Décoration Accessible</h3>
                 <p>L'art de qualité à portée de main pour tous les budgets.</p>
-            </div>
-            <div class="card">
+            </div></div>
+            <div class="card"><div class="card-content">
                 <h3>Sur Mesure</h3>
                 <p>Exprimez vos envies avec nos affiches personnalisées.</p>
-            </div>
+            </div></div>
         </div>
     </section>
 
@@ -54,7 +58,9 @@
         <p>&copy; 2026 La Poster - Sousse, Tunisie. Tous droits réservés.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="supabase-client.js"></script>
+    <script defer src="supabase-shop.js"></script>
+    <script defer src="script.js"></script>
 </body>
 </html>
-
